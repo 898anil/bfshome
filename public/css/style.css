@@ -1,9 +1,32 @@
 :root {
-    --primary-color: #1a8917;
-    --text-color: #292929;
-    --secondary-text-color: #757575;
-    --background-color: #ffffff;
-    --border-color: #e6e6e6;
+    --bg-color: #0a0a1a;
+    --text-color: #e0e0ff;
+    --primary-color: #4a90e2;
+    --secondary-color: #50c878;
+    --accent-color: #ff6b6b;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 * {
@@ -16,7 +39,7 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     line-height: 1.6;
-    color: var(--text-color);
+    color: #333; /* Darker text color for better contrast */
     background-color: var(--background-color);
 }
 
@@ -29,12 +52,15 @@ body {
 header {
     border-bottom: 1px solid var(--border-color);
     padding: 20px 0;
+    background-color: rgba(10, 10, 26, 0.8); /* Semi-transparent dark background */
+    position: relative; /* Add this */
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Add this */
 }
 
 .logo {
@@ -42,6 +68,7 @@ nav {
     align-items: center;
     text-decoration: none;
     color: inherit;
+    margin-bottom: 10px; /* Add this for spacing in mobile view */
 }
 
 .logo img {
@@ -63,6 +90,12 @@ nav {
     color: var(--text-color);
     text-decoration: none;
     font-size: 1rem;
+    font-weight: 500; /* Make the font slightly bolder */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow for better visibility */
+}
+
+.nav-links a:hover {
+    color: var(--primary-color); /* Change color on hover for better interaction feedback */
 }
 
 .nav-toggle {
@@ -83,22 +116,22 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 3.5rem; /* Increased from 3rem */
     line-height: 1.2;
     text-align: center;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 2.5rem; /* Increased from 2rem */
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Increased from 1.5rem */
 }
 
 p {
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem; /* Increased from 1.1rem */
     color: var(--secondary-text-color);
 }
 
@@ -108,7 +141,7 @@ p {
 }
 
 .tagline {
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Increased from 1.2rem */
     margin-bottom: 1.5rem;
 }
 
@@ -121,6 +154,7 @@ p {
     border-radius: 5px;
     font-weight: 400;
     transition: background-color 0.3s ease;
+    font-size: 1.1rem; /* Increased from default size */
 }
 
 .cta-button:hover {
@@ -131,13 +165,13 @@ p {
     font-style: italic;
     text-align: center;
     margin: 2rem 0;
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Increased from 1.2rem */
 }
 
 .quote-author {
     display: block;
     margin-top: 0.5rem;
-    font-size: 1rem;
+    font-size: 1.2rem; /* Increased from 1rem */
 }
 
 #features {
@@ -165,13 +199,84 @@ footer {
 
 .coming-soon {
     text-align: center;
-    margin-top: 3rem;
+    margin-bottom: 2rem;
 }
 
-.coming-soon i {
-    font-size: 4rem;
+.coming-soon h2 {
+    color: #1a1a1a; /* Even darker color for headings */
+    margin-bottom: 1rem;
+}
+
+.coming-soon p, .cta-section p {
+    color: #333; /* Consistent with body text color */
+    line-height: 1.6;
+}
+
+.cta-section {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-section h3 {
     color: var(--primary-color);
     margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.cta-section p {
+    margin-bottom: 1.5rem;
+}
+
+.contact-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.contact-form input[type="email"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.contact-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Add this if the footer text is hard to read */
+footer {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker, more opaque background */
+    color: #fff; /* White text for footer */
 }
 
 @media screen and (max-width: 768px) {
@@ -179,33 +284,16 @@ footer {
         padding: 0 1rem;
     }
 
-    h1 {
-        font-size: 2rem;
-    }
-
-    .tagline {
-        font-size: 1rem;
-    }
-
-    .cta-button {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-    }
-
     nav {
-        position: relative;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .nav-links {
         display: none;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: var(--background-color);
-        padding: 1rem;
-        border-bottom: 1px solid var(--border-color);
+        width: 100%;
+        padding: 1rem 0;
     }
 
     .nav-links.active {
@@ -218,6 +306,9 @@ footer {
 
     .nav-toggle {
         display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
     }
 }
 

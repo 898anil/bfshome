@@ -26,11 +26,24 @@
     </header>
 
     <main class="container">
-        <h1>Blog</h1>
-        <div class="coming-soon">
-            <i class="fas fa-tools"></i>
-            <p>Our blog is coming soon! We're working hard to bring you insightful articles about building technologies from scratch.</p>
-        </div>
+        <h1 class="page-title">Blog</h1>
+        <section class="content-section">
+            <div class="coming-soon">
+                <i class="fas fa-tools"></i>
+                <h2>Coming Soon</h2>
+                <p>Our blog is under construction! We're working hard to bring you insightful articles about building technologies from scratch.</p>
+            </div>
+            <div class="cta-section">
+                <h3>Stay Updated</h3>
+                <p>Subscribe to our newsletter to be notified when new articles are published:</p>
+                <form id="newsletter-form" class="contact-form">
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -39,15 +52,17 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navToggle = document.querySelector('.nav-toggle');
-            const navLinks = document.querySelector('.nav-links');
+    <script src="js/main.js"></script>
 
-            navToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-            });
-        });
+    <!-- Add this just before the closing </body> tag -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q8MV7RGBH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4Q8MV7RGBH');
     </script>
 </body>
 </html>

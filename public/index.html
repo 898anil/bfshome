@@ -3,90 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuiltFromScratch.tech - Understanding Technologies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <title>BuiltFromScratch.tech - Exploring Web Technologies</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="BuiltFromScratch.tech is a journey to understand web technologies by recreating fundamental components. Join us in exploring HTTP servers, containerization, reverse proxies, and database systems.">
+    <meta name="keywords" content="web development, HTTP servers, containerization, reverse proxies, database systems, technology exploration">
+    <meta name="author" content="BuiltFromScratch.tech">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://builtfromscratch.tech/">
+    <meta property="og:title" content="BuiltFromScratch.tech - Exploring Web Technologies">
+    <meta property="og:description" content="Join us on a journey to understand web technologies by recreating fundamental components from scratch.">
+    <meta property="og:image" content="https://builtfromscratch.tech/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://builtfromscratch.tech/">
+    <meta property="twitter:title" content="BuiltFromScratch.tech - Exploring Web Technologies">
+    <meta property="twitter:description" content="Join us on a journey to understand web technologies by recreating fundamental components from scratch.">
+    <meta property="twitter:image" content="https://builtfromscratch.tech/twitter-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <style>
+        :root {
+            --bg-color: #0a0a1a;
+            --text-color: #e0e0ff;
+            --primary-color: #4a90e2;
+            --secondary-color: #50c878;
+            --accent-color: #ff6b6b;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        header {
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out, float 6s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out 1s both, pulse 2s infinite;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            padding: 6rem 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--primary-color);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 3rem;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .tech-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        footer {
+            background-color: #1a1a2e;
+            color: var(--text-color);
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            margin-right: 2rem;
+            margin-bottom: 2rem;
+            min-width: 200px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .footer-section {
+                margin-right: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <a href="#" class="logo">
-                <img src="logo_v1.png" alt="BuiltFromScratch.tech Logo" height="40">
-            </a>
-            <ul class="nav-links">
-                <li><a href="#">Home</a></li>
+            <div class="logo">BuiltFromScratch.tech</div>
+            <ul>
+                <li><a href="./">Home</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="nav-toggle">☰</button>
         </nav>
     </header>
 
-    <main class="container">
+    <main>
         <section class="hero">
             <h1>BuiltFromScratch.tech</h1>
-            <p class="tagline">An attempt to gain deeper understanding of the great software the web is built on</p>
-            <a href="blog.html" class="cta-button">Explore Our Journey</a>
+            <p>An attempt to gain deeper understanding of the great software the web is built on</p>
+            <a href="#technologies" class="cta-button">Explore Our Journey</a>
         </section>
 
-        <blockquote class="quote">
-            "What I cannot create, I do not understand."
-            <span class="quote-author">— Richard Feynman</span>
-        </blockquote>
+        <section class="section container">
+            <h2>"What I cannot create, I do not understand."</h2>
+            <p style="text-align: center; font-style: italic; font-size: 1.2rem; animation: fadeIn 1s ease-out 0.5s both;">— Richard Feynman</p>
+        </section>
 
-        <section id="about">
+        <section class="section container">
             <h2>Our Mission</h2>
-            <p>At BuiltFromScratch.tech, we embrace Richard Feynman's philosophy of understanding through creation. We embark on a journey to unravel the complexities of modern web technologies by recreating fundamental components from the ground up. Our aim is to provide deep insights into the inner workings of the software that powers the internet.</p>
-            <p>Our goal is not just to build, but to truly understand. Through this process, we hope to demystify the technologies that form the backbone of our digital world, making this knowledge accessible to developers, enthusiasts, and curious minds alike.</p>
+            <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto; text-align: center; animation: fadeIn 1s ease-out 0.5s both;">At BuiltFromScratch.tech, we embrace Richard Feynman's philosophy of understanding through creation. We embark on a journey to unravel the complexities of modern web technologies by recreating fundamental components from the ground up. Our aim is to provide deep insights into the inner workings of the software that powers the internet.</p>
+            <p style="font-size: 1.1rem; max-width: 800px; margin: 2rem auto 0; text-align: center; animation: fadeIn 1s ease-out 0.7s both;">Our goal is not just to build, but to truly understand. Through this process, we hope to demystify the technologies that form the backbone of our digital world, making this knowledge accessible to developers, enthusiasts, and curious minds alike.</p>
         </section>
 
-        <!-- This section has been removed as it was a duplicate of the previous "Our Mission" section -->
-         
-
-        <section id="features">
+        <section class="section container" id="technologies">
             <h2>Technologies We're Exploring</h2>
-            <div class="feature">
-                <i class="fas fa-server fa-3x"></i>
-                <h3>HTTP Servers</h3>
-                <p>Delve into the core of web communication by building a basic HTTP server from scratch. Understand the protocols that enable the transfer of data across the internet.</p>
-                <p><strong>Note: This very website you're viewing right now is being served by our own custom-built HTTP web server!</strong> It's a living example of the technology we're exploring.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-box fa-3x"></i>
-                <h3>Containerization Systems</h3>
-                <p>Unpack the principles behind Docker and other containerization technologies. By creating a simplified version, we'll explore how modern applications achieve consistency across different environments.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-random fa-3x"></i>
-                <h3>Reverse Proxies</h3>
-                <p>Implement a basic reverse proxy to grasp the concepts of load balancing and traffic management. Understand how large-scale applications handle millions of requests efficiently.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-database fa-3x"></i>
-                <h3>Database Management Systems</h3>
-                <p>Build a minimal database system to comprehend the fundamentals of data storage, retrieval, and management. Explore how web applications interact with and manipulate vast amounts of information.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="tech-icon">🌐</div>
+                    <h3>HTTP Servers</h3>
+                    <p>Delve into the core of web communication by building a basic HTTP server from scratch. Understand the protocols that enable the transfer of data across the internet.</p>
+                    <p><strong>Note:</strong> This very website you're viewing right now is being served by our own custom-built HTTP web server! It's a living example of the technology we're exploring.</p>
+                </div>
+                <div class="card">
+                    <div class="tech-icon">📦</div>
+                    <h3>Containerization Systems</h3>
+                    <p>Unpack the principles behind Docker and other containerization technologies. By creating a simplified version, we'll explore how modern applications achieve consistency across different environments.</p>
+                </div>
+                <div class="card">
+                    <div class="tech-icon">🔄</div>
+                    <h3>Reverse Proxies</h3>
+                    <p>Implement a basic reverse proxy to grasp the concepts of load balancing and traffic management. Understand how large-scale applications handle millions of requests efficiently.</p>
+                </div>
+                <div class="card">
+                    <div class="tech-icon">🗄️</div>
+                    <h3>Database Management Systems</h3>
+                    <p>Build a minimal database system to comprehend the fundamentals of data storage, retrieval, and management. Explore how web applications interact with and manipulate vast amounts of information.</p>
+                </div>
             </div>
         </section>
 
-        <section id="contact">
+        <section class="section container">
             <h2>Join Our Exploration</h2>
-            <p>Whether you're a seasoned developer, a curious beginner, or somewhere in between, we invite you to join us on this journey of discovery. Follow our progress, contribute your insights, or simply learn along with us.</p>
-            <a href="blog.html" class="cta-button">Read Our Latest Findings</a>
+            <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto 3rem; animation: fadeIn 1s ease-out 0.5s both;">Whether you're a seasoned developer, a curious beginner, or somewhere in between, we invite you to join us on this journey of discovery. Follow our progress, contribute your insights, or simply learn along with us.</p>
+            <div style="text-align: center;">
+                <a href="#" class="cta-button">Read Our Latest Findings</a>
+            </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 BuiltFromScratch.tech. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>BuiltFromScratch.tech is dedicated to exploring and understanding web technologies through hands-on recreation of fundamental components.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="./">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <ul class="social-links">
+                        <li><a href="#" target="_blank">GitHub</a></li>
+                        <li><a href="#" target="_blank">Twitter</a></li>
+                        <li><a href="#" target="_blank">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BuiltFromScratch.tech. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q8MV7RGBH"></script>
     <script>
-        document.querySelector('.nav-toggle').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4Q8MV7RGBH');
     </script>
 </body>
 </html>
