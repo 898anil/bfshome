@@ -1,0 +1,45 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="800" height="400" fill="#F8FAFC"/>
+    
+    <!-- Host System Box -->
+    <rect x="50" y="50" width="700" height="300" fill="#635bff" opacity="0.05" rx="10"/>
+    <text x="70" y="80" font-family="Inter" font-size="20" fill="#1f2937">Host System</text>
+    
+    <!-- Container 1 -->
+    <rect x="100" y="100" width="200" height="200" fill="#635bff" opacity="0.1" rx="10"/>
+    <text x="120" y="130" font-family="Inter" font-size="16" fill="#1f2937">Container 1</text>
+    
+    <!-- Container 2 -->
+    <rect x="350" y="100" width="200" height="200" fill="#00d4ff" opacity="0.1" rx="10"/>
+    <text x="370" y="130" font-family="Inter" font-size="16" fill="#1f2937">Container 2</text>
+    
+    <!-- Namespace Labels -->
+    <g transform="translate(120, 150)">
+        <text font-family="Inter" font-size="14" fill="#4b5563">PID Namespace</text>
+        <text y="25" font-family="Inter" font-size="14" fill="#4b5563">Network Namespace</text>
+        <text y="50" font-family="Inter" font-size="14" fill="#4b5563">Mount Namespace</text>
+        <text y="75" font-family="Inter" font-size="14" fill="#4b5563">UTS Namespace</text>
+    </g>
+    
+    <g transform="translate(370, 150)">
+        <text font-family="Inter" font-size="14" fill="#4b5563">PID Namespace</text>
+        <text y="25" font-family="Inter" font-size="14" fill="#4b5563">Network Namespace</text>
+        <text y="50" font-family="Inter" font-size="14" fill="#4b5563">Mount Namespace</text>
+        <text y="75" font-family="Inter" font-size="14" fill="#4b5563">UTS Namespace</text>
+    </g>
+    
+    <!-- Isolation Lines -->
+    <path d="M 300 200 L 350 200" stroke="#635bff" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="310" y="190" font-family="Inter" font-size="12" fill="#4b5563">Isolation</text>
+    
+    <!-- Legend -->
+    <rect x="600" y="120" width="120" height="160" fill="white" rx="5" stroke="#e5e7eb"/>
+    <text x="610" y="140" font-family="Inter" font-size="14" font-weight="600" fill="#1f2937">Legend</text>
+    <circle cx="620" cy="160" r="5" fill="#635bff"/>
+    <text x="635" y="165" font-family="Inter" font-size="12" fill="#4b5563">Container 1</text>
+    <circle cx="620" cy="180" r="5" fill="#00d4ff"/>
+    <text x="635" y="185" font-family="Inter" font-size="12" fill="#4b5563">Container 2</text>
+    <line x1="610" y1="200" x2="630" y2="200" stroke="#635bff" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="635" y="205" font-family="Inter" font-size="12" fill="#4b5563">Isolation</text>
+</svg> 

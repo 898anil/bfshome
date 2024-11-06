@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Container Runtime from Scratch - Part 1: Linux Namespaces - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to create a basic container runtime using Linux namespaces. Part 1 of our containers from scratch series.">
+    <meta name="keywords" content="containers, Linux namespaces, containerization, Docker alternative, Go programming">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog/containers/part-1">
+    <meta property="og:title" content="Building a Container Runtime from Scratch - Part 1: Linux Namespaces">
+    <meta property="og:description" content="Start your journey in building a container runtime by understanding Linux namespaces">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog-post.css">
+</head>
+<body>
+    <header>
+        <!-- Same header as other pages -->
+    </header>
+
+    <main class="blog-post">
+        <article class="container">
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Containers</span>
+                    <span class="post-date">March 15, 2024</span>
+                    <span class="post-read-time">15 min read</span>
+                    <span class="post-series">Part 1 of 20</span>
+                </div>
+                <h1>Building a Container Runtime from Scratch - Part 1: Linux Namespaces</h1>
+                <p class="post-excerpt">Start your journey in building a container runtime by understanding and implementing Linux namespaces, the foundation of container isolation.</p>
+            </header>
+
+            <div class="post-content">
+                <h2>Introduction</h2>
+                <p>In this series, we'll build a container runtime from scratch. We'll start with Linux namespaces, which provide the isolation features that make containers possible. By the end of this part, you'll have a basic program that can run processes in isolation.</p>
+
+                <h2>Understanding Linux Namespaces</h2>
+                <p>Namespaces are a Linux kernel feature that partitions kernel resources. Each process can have its own isolated instance of global resources. The main types are:</p>
+                <ul>
+                    <li>PID - Process IDs</li>
+                    <li>NET - Network interfaces</li>
+                    <li>MNT - Mount points</li>
+                    <li>UTS - Hostname and domain name</li>
+                    <li>IPC - Inter-process communication</li>
+                    <li>USER - User and group IDs</li>
+                </ul>
+
+                <h2>Basic Container Implementation</h2>
+                <pre><code class="language-go">
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/exec"
+    "syscall"
+)
+
+func main() {
+    switch os.Args[1] {
+    case "run":
+        run()
+    case "child":
+        child()
+    default:
+        panic("Invalid command")
+    }
+}
+
+func run() {
+    // This is the parent process
+    cmd := exec.Command("/proc/self/exe", append([]string{"child"}, os.Args[2:]...)...)
+    
+    cmd.SysProcAttr = &syscall.SysProcAttr{
+        Cloneflags: syscall.CLONE_NEWUTS |  // New hostname namespace
+                   syscall.CLONE_NEWPID |   // New PID namespace
+                   syscall.CLONE_NEWNS,     // New mount namespace
+    }
+    
+    cmd.Stdin = os.Stdin
+    cmd.Stdout = os.Stdout
+    cmd.Stderr = os.Stderr
+
+    if err := cmd.Run(); err != nil {
+        fmt.Printf("Error running the command: %v\n", err)
+        os.Exit(1)
+    }
+}
+
+func child() {
+    // This runs in the new namespaces
+    must(syscall.Sethostname([]byte("container")))
+    must(syscall.Chroot("/rootfs"))
+    must(syscall.Chdir("/"))
+    must(syscall.Mount("proc", "proc", "proc", 0, ""))
+
+    cmd := exec.Command(os.Args[2], os.Args[3:]...)
+    cmd.Stdin = os.Stdin
+    cmd.Stdout = os.Stdout
+    cmd.Stderr = os.Stderr
+
+    if err := cmd.Run(); err != nil {
+        fmt.Printf("Error running the command: %v\n", err)
+        os.Exit(1)
+    }
+
+    must(syscall.Unmount("proc", 0))
+}
+
+func must(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+</code></pre>
+
+                <h2>Testing the Container</h2>
+                <p>To test this basic container implementation:</p>
+                
+                <pre><code class="language-bash">
+# Build the program
+$ go build -o container
+
+# Create a basic rootfs (you'll need a minimal Linux root filesystem)
+$ mkdir rootfs
+$ cd rootfs
+$ wget https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-minirootfs-3.14.0-x86_64.tar.gz
+$ tar xzf alpine-minirootfs-3.14.0-x86_64.tar.gz
+
+# Run a shell in our container
+$ sudo ./container run /bin/sh
+/ # hostname
+container
+/ # ps aux
+PID   USER     TIME  COMMAND
+1     root     0:00  /bin/sh
+2     root     0:00  ps aux
+</code></pre>
+
+                <h2>Understanding the Code</h2>
+                <h3>Key Components:</h3>
+                <ol>
+                    <li><strong>Cloneflags</strong>: Specifies which namespaces to create</li>
+                    <li><strong>Chroot</strong>: Changes the root filesystem</li>
+                    <li><strong>Mount proc</strong>: Sets up the process filesystem</li>
+                    <li><strong>Two-stage execution</strong>: Parent and child processes</li>
+                </ol>
+
+                <h2>Next Steps</h2>
+                <p>In Part 2, we'll build upon this foundation to:</p>
+                <ul>
+                    <li>Implement cgroups for resource control</li>
+                    <li>Add network namespace configuration</li>
+                    <li>Create a proper filesystem layer system</li>
+                    <li>Add basic container lifecycle management</li>
+                </ul>
+
+                <div class="post-navigation">
+                    <a href="/blog/containers/part-2" class="next-post">
+                        Next Article: Part 2 - Control Groups (cgroups)
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <!-- Same footer as other pages -->
+    </footer>
+</body>
+</html> 

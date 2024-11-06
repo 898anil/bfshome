@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Database Engine from Scratch - Part 1: Storage Engine Basics - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to build a basic storage engine as the foundation for a database system. Part 1 of our database engine from scratch series.">
+    <meta name="keywords" content="database engine, storage engine, Go programming, database implementation, file handling">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog/database-engine/part-1">
+    <meta property="og:title" content="Building a Database Engine from Scratch - Part 1: Storage Engine Basics">
+    <meta property="og:description" content="Start your journey in building a database engine by implementing a basic storage system">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog-post.css">
+</head>
+<body>
+    <header>
+        <!-- Same header as other pages -->
+    </header>
+
+    <main class="blog-post">
+        <article class="container">
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Databases</span>
+                    <span class="post-date">March 15, 2024</span>
+                    <span class="post-read-time">15 min read</span>
+                    <span class="post-series">Part 1 of 20</span>
+                </div>
+                <h1>Building a Database Engine from Scratch - Part 1: Storage Engine Basics</h1>
+                <p class="post-excerpt">Start your journey in building a database engine by implementing a basic storage system that can efficiently read and write data to disk.</p>
+            </header>
+
+            <div class="post-content">
+                <h2>Introduction</h2>
+                <p>In this series, we'll build a database engine from scratch. We'll start with the fundamental component: the storage engine. This handles how data is organized and stored on disk, forming the foundation for all other database operations.</p>
+
+                <h2>Understanding Storage Engines</h2>
+                <p>A storage engine is responsible for:</p>
+                <ul>
+                    <li>Writing data to disk</li>
+                    <li>Reading data from disk</li>
+                    <li>Managing data organization</li>
+                    <li>Handling data pages</li>
+                    <li>Ensuring data persistence</li>
+                </ul>
+
+                <h2>Basic Storage Engine Implementation</h2>
+                <pre><code class="language-go">
+package main
+
+import (
+    "encoding/binary"
+    "fmt"
+    "os"
+    "sync"
+)
+
+const (
+    PageSize = 4096  // Standard page size (4KB)
+    MetaPageID = 0   // First page is always metadata
+)
+
+// Page represents a fixed-size block of data
+type Page struct {
+    id      uint64
+    data    []byte
+    isDirty bool
+}
+
+// StorageEngine manages the database files and pages
+type StorageEngine struct {
+    filename     string
+    file        *os.File
+    pages       map[uint64]*Page
+    freeList    []uint64
+    mu          sync.RWMutex
+    nextPageID  uint64
+}
+
+// NewStorageEngine creates a new storage engine instance
+func NewStorageEngine(filename string) (*StorageEngine, error) {
+    file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, 0666)
+    if err != nil {
+        return nil, fmt.Errorf("failed to open file: %v", err)
+    }
+
+    se := &StorageEngine{
+        filename: filename,
+        file:     file,
+        pages:    make(map[uint64]*Page),
+        nextPageID: 1, // 0 is reserved for metadata
+    }
+
+    // Initialize or load metadata
+    if err := se.initMetadata(); err != nil {
+        file.Close()
+        return nil, err
+    }
+
+    return se, nil
+}
+
+// initMetadata initializes or loads the database metadata
+func (se *StorageEngine) initMetadata() error {
+    stat, err := se.file.Stat()
+    if err != nil {
+        return err
+    }
+
+    if stat.Size() == 0 {
+        // New file, initialize metadata
+        metaPage := &Page{
+            id:   MetaPageID,
+            data: make([]byte, PageSize),
+        }
+        
+        // Write initial metadata
+        binary.LittleEndian.PutUint64(metaPage.data[0:8], se.nextPageID)
+        
+        if err := se.writePage(metaPage); err != nil {
+            return err
+        }
+    } else {
+        // Load existing metadata
+        metaPage, err := se.readPage(MetaPageID)
+        if err != nil {
+            return err
+        }
+        
+        se.nextPageID = binary.LittleEndian.Uint64(metaPage.data[0:8])
+    }
+
+    return nil
+}
+
+// AllocatePage creates a new page
+func (se *StorageEngine) AllocatePage() (*Page, error) {
+    se.mu.Lock()
+    defer se.mu.Unlock()
+
+    var pageID uint64
+    if len(se.freeList) > 0 {
+        // Reuse a freed page
+        pageID = se.freeList[len(se.freeList)-1]
+        se.freeList = se.freeList[:len(se.freeList)-1]
+    } else {
+        pageID = se.nextPageID
+        se.nextPageID++
+    }
+
+    page := &Page{
+        id:   pageID,
+        data: make([]byte, PageSize),
+    }
+    
+    se.pages[pageID] = page
+    return page, nil
+}
+
+// readPage reads a page from disk
+func (se *StorageEngine) readPage(pageID uint64) (*Page, error) {
+    se.mu.RLock()
+    if page, exists := se.pages[pageID]; exists {
+        se.mu.RUnlock()
+        return page, nil
+    }
+    se.mu.RUnlock()
+
+    offset := int64(pageID) * PageSize
+    data := make([]byte, PageSize)
+    
+    if _, err := se.file.ReadAt(data, offset); err != nil {
+        return nil, err
+    }
+
+    page := &Page{
+        id:   pageID,
+        data: data,
+    }
+
+    se.mu.Lock()
+    se.pages[pageID] = page
+    se.mu.Unlock()
+
+    return page, nil
+}
+
+// writePage writes a page to disk
+func (se *StorageEngine) writePage(page *Page) error {
+    offset := int64(page.id) * PageSize
+    _, err := se.file.WriteAt(page.data, offset)
+    return err
+}
+</code></pre>
+
+                <h2>Testing the Storage Engine</h2>
+                <p>Let's test our basic storage engine implementation:</p>
+                
+                <pre><code class="language-go">
+func main() {
+    // Create a new storage engine
+    se, err := NewStorageEngine("test.db")
+    if err != nil {
+        panic(err)
+    }
+    defer se.file.Close()
+
+    // Allocate a new page
+    page, err := se.AllocatePage()
+    if err != nil {
+        panic(err)
+    }
+
+    // Write some data
+    copy(page.data, []byte("Hello, Database!"))
+    
+    // Save the page
+    if err := se.writePage(page); err != nil {
+        panic(err)
+    }
+
+    // Read it back
+    readPage, err := se.readPage(page.id)
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Printf("Read data: %s\n", readPage.data[:14])
+}
+</code></pre>
+
+                <h2>Understanding the Code</h2>
+                <h3>Key Components:</h3>
+                <ol>
+                    <li><strong>Page Structure</strong>: Fixed-size blocks for data storage</li>
+                    <li><strong>Page Management</strong>: Allocation and tracking of pages</li>
+                    <li><strong>File I/O</strong>: Reading and writing pages to disk</li>
+                    <li><strong>Metadata Handling</strong>: Tracking database state</li>
+                </ol>
+
+                <h2>Next Steps</h2>
+                <p>In Part 2, we'll build upon this foundation to:</p>
+                <ul>
+                    <li>Implement a buffer pool for caching</li>
+                    <li>Add basic record structure</li>
+                    <li>Create a simple table abstraction</li>
+                    <li>Handle concurrent access</li>
+                </ul>
+
+                <div class="post-navigation">
+                    <a href="/blog/database-engine/part-2" class="next-post">
+                        Next Article: Part 2 - Buffer Pool Implementation
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <!-- Same footer as other pages -->
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Database Engine from Scratch - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to build a simple database engine from scratch. Understanding storage engines, indexing, and query optimization.">
+    <meta name="keywords" content="database engine, storage engines, indexing, query optimization, database implementation">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog/database-engine">
+    <meta property="og:title" content="Building a Database Engine from Scratch">
+    <meta property="og:description" content="Learn how to build a simple database engine and understand core database concepts">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog-post.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="BuiltFromScratch.tech Logo">
+            </a>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog.html">Blog</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="blog-post">
+        <article class="container">
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Databases</span>
+                    <span class="post-date">March 1, 2024</span>
+                    <span class="post-read-time">20 min read</span>
+                </div>
+                <h1>Building a Database Engine from Scratch</h1>
+                <p class="post-excerpt">Learn how to implement a basic database engine with storage management, indexing, and query processing capabilities.</p>
+            </header>
+
+            <div class="post-content">
+                <h2>Introduction to Database Engines</h2>
+                <p>Database engines are complex systems that manage data storage, retrieval, and manipulation. In this tutorial, we'll build a simple but functional database engine to understand the core concepts.</p>
+
+                <h2>Core Components</h2>
+                <ul>
+                    <li>Storage Engine - Managing data on disk</li>
+                    <li>Buffer Manager - Caching frequently accessed data</li>
+                    <li>Index Manager - Efficient data lookup</li>
+                    <li>Query Processor - Executing queries</li>
+                </ul>
+
+                <h2>Basic Storage Engine Implementation</h2>
+                <pre><code class="language-go">
+package main
+
+import (
+    "os"
+    "encoding/binary"
+)
+
+type Page struct {
+    id       uint64
+    data     []byte
+    isDirty  bool
+}
+
+type StorageEngine struct {
+    filename string
+    pageSize int
+    pages    map[uint64]*Page
+}
+
+func NewStorageEngine(filename string, pageSize int) *StorageEngine {
+    return &StorageEngine{
+        filename: filename,
+        pageSize: pageSize,
+        pages:    make(map[uint64]*Page),
+    }
+}
+
+func (se *StorageEngine) ReadPage(pageID uint64) (*Page, error) {
+    // Implementation details...
+}
+
+func (se *StorageEngine) WritePage(page *Page) error {
+    // Implementation details...
+}
+                </code></pre>
+
+                <h2>Implementing B-Tree Indexing</h2>
+                <p>B-Trees are the most common indexing structure in databases. Let's implement a basic B-Tree:</p>
+
+                <pre><code class="language-go">
+type BTreeNode struct {
+    isLeaf    bool
+    keys      []int
+    children  []*BTreeNode
+    data      [][]byte
+}
+
+type BTree struct {
+    root     *BTreeNode
+    degree   int
+}
+
+func (t *BTree) Insert(key int, data []byte) {
+    // Implementation details...
+}
+
+func (t *BTree) Search(key int) ([]byte, bool) {
+    // Implementation details...
+}
+                </code></pre>
+
+                <h2>Query Processing</h2>
+                <p>A query processor takes SQL queries and executes them efficiently. Here's a simple implementation:</p>
+
+                <pre><code class="language-go">
+type QueryProcessor struct {
+    storage *StorageEngine
+    index   *BTree
+}
+
+func (qp *QueryProcessor) ExecuteQuery(query string) (Result, error) {
+    // Parse query
+    // Plan execution
+    // Execute plan
+    // Return results
+}
+                </code></pre>
+
+                <h2>Performance Considerations</h2>
+                <p>When building a database engine, several performance aspects need consideration:</p>
+                <ul>
+                    <li>Disk I/O optimization</li>
+                    <li>Memory management</li>
+                    <li>Concurrency control</li>
+                    <li>Query optimization</li>
+                </ul>
+
+                <h2>Next Steps</h2>
+                <p>This implementation can be extended with:</p>
+                <ul>
+                    <li>Transaction support</li>
+                    <li>ACID properties</li>
+                    <li>Advanced indexing structures</li>
+                    <li>Query optimization</li>
+                </ul>
+
+                <div class="post-navigation">
+                    <a href="/blog/auth-system" class="next-post">
+                        Next Article: Building an Authentication System
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <!-- Same footer as other pages -->
+    </footer>
+</body>
+</html> 

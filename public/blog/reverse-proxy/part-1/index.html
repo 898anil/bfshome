@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Reverse Proxy from Scratch - Part 1: Basic TCP Proxy - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to build a basic TCP proxy as the foundation for a reverse proxy. Part 1 of our reverse proxy from scratch series.">
+    <meta name="keywords" content="reverse proxy, TCP proxy, load balancing, Go programming, networking">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog/reverse-proxy/part-1">
+    <meta property="og:title" content="Building a Reverse Proxy from Scratch - Part 1: Basic TCP Proxy">
+    <meta property="og:description" content="Start your journey in building a reverse proxy by implementing a basic TCP proxy">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog-post.css">
+</head>
+<body>
+    <header>
+        <!-- Same header as other pages -->
+    </header>
+
+    <main class="blog-post">
+        <article class="container">
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Architecture</span>
+                    <span class="post-date">March 15, 2024</span>
+                    <span class="post-read-time">15 min read</span>
+                    <span class="post-series">Part 1 of 20</span>
+                </div>
+                <h1>Building a Reverse Proxy from Scratch - Part 1: Basic TCP Proxy</h1>
+                <p class="post-excerpt">Start your journey in building a reverse proxy by implementing a basic TCP proxy that can forward traffic between clients and backend servers.</p>
+            </header>
+
+            <div class="post-content">
+                <h2>Introduction</h2>
+                <p>In this series, we'll build a production-grade reverse proxy from scratch. We'll start with a basic TCP proxy and gradually add features like HTTP handling, load balancing, and SSL termination. By the end of this part, you'll have a working TCP proxy that can forward traffic between clients and a backend server.</p>
+
+                <h2>Understanding Reverse Proxies</h2>
+                <p>A reverse proxy sits between clients and backend servers, providing:</p>
+                <ul>
+                    <li>Load balancing</li>
+                    <li>SSL termination</li>
+                    <li>Caching</li>
+                    <li>Security features</li>
+                    <li>Request/Response modification</li>
+                </ul>
+
+                <h2>Basic TCP Proxy Implementation</h2>
+                <pre><code class="language-go">
+package main
+
+import (
+    "io"
+    "log"
+    "net"
+)
+
+type Proxy struct {
+    listenAddr string
+    targetAddr string
+}
+
+func NewProxy(listenAddr, targetAddr string) *Proxy {
+    return &Proxy{
+        listenAddr: listenAddr,
+        targetAddr: targetAddr,
+    }
+}
+
+func (p *Proxy) Start() error {
+    listener, err := net.Listen("tcp", p.listenAddr)
+    if err != nil {
+        return err
+    }
+    defer listener.Close()
+
+    log.Printf("Proxy listening on %s, forwarding to %s", p.listenAddr, p.targetAddr)
+
+    for {
+        clientConn, err := listener.Accept()
+        if err != nil {
+            log.Printf("Failed to accept connection: %v", err)
+            continue
+        }
+
+        go p.handleConnection(clientConn)
+    }
+}
+
+func (p *Proxy) handleConnection(clientConn net.Conn) {
+    defer clientConn.Close()
+
+    // Connect to the target server
+    targetConn, err := net.Dial("tcp", p.targetAddr)
+    if err != nil {
+        log.Printf("Failed to connect to target: %v", err)
+        return
+    }
+    defer targetConn.Close()
+
+    // Create channels to signal when copying is done
+    done := make(chan bool, 2)
+
+    // Copy data in both directions
+    go func() {
+        io.Copy(targetConn, clientConn)
+        done <- true
+    }()
+
+    go func() {
+        io.Copy(clientConn, targetConn)
+        done <- true
+    }()
+
+    // Wait for both copies to complete
+    <-done
+    <-done
+}
+
+func main() {
+    proxy := NewProxy(":8080", "localhost:9000")
+    
+    if err := proxy.Start(); err != nil {
+        log.Fatal(err)
+    }
+}
+</code></pre>
+
+                <h2>Testing the Proxy</h2>
+                <p>To test this basic proxy implementation:</p>
+                
+                <pre><code class="language-bash">
+# Start a test backend server (e.g., using netcat)
+$ nc -l 9000
+
+# In another terminal, start the proxy
+$ go run main.go
+
+# In a third terminal, connect to the proxy
+$ nc localhost 8080
+
+# Type messages - they should be forwarded to the backend
+Hello, proxy!
+</code></pre>
+
+                <h2>Understanding the Code</h2>
+                <h3>Key Components:</h3>
+                <ol>
+                    <li><strong>TCP Listener</strong>: Accepts incoming client connections</li>
+                    <li><strong>Connection Handler</strong>: Manages each client connection</li>
+                    <li><strong>Bidirectional Copying</strong>: Forwards data in both directions</li>
+                    <li><strong>Goroutines</strong>: Handles multiple connections concurrently</li>
+                </ol>
+
+                <h2>Next Steps</h2>
+                <p>In Part 2, we'll build upon this foundation to:</p>
+                <ul>
+                    <li>Add HTTP protocol support</li>
+                    <li>Implement request/response parsing</li>
+                    <li>Add basic header manipulation</li>
+                    <li>Create a simple configuration system</li>
+                </ul>
+
+                <div class="post-navigation">
+                    <a href="/blog/reverse-proxy/part-2" class="next-post">
+                        Next Article: Part 2 - HTTP Protocol Support
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <!-- Same footer as other pages -->
+    </footer>
+</body>
+</html> 

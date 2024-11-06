@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
+    <header class="home-header">
         <nav class="container">
             <a href="./" class="logo">
                 <img src="/images/logo.png" alt="BuiltFromScratch.tech Logo">
@@ -82,7 +82,7 @@
                         <div class="feature-icon">🌐</div>
                         <h3>HTTP Server</h3>
                         <p>Build a production-ready HTTP server from scratch. Understand the protocols that power the web.</p>
-                        <a href="/blog/http-server" class="feature-link">
+                        <a href="/blog/http-server/index.html" class="feature-link">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -95,7 +95,7 @@
                         <div class="feature-icon">📦</div>
                         <h3>Containerization</h3>
                         <p>Deep dive into container technology by building a simplified version of Docker. Learn about isolation and deployment.</p>
-                        <a href="/blog/containers" class="feature-link">
+                        <a href="/blog/containers/index.html" class="feature-link">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -108,7 +108,7 @@
                         <div class="feature-icon">🔄</div>
                         <h3>Reverse Proxy</h3>
                         <p>Create a reverse proxy to understand load balancing, caching, and SSL termination in modern web architecture.</p>
-                        <a href="/blog/reverse-proxy" class="feature-link">
+                        <a href="/blog/reverse-proxy/index.html" class="feature-link">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -121,7 +121,7 @@
                         <div class="feature-icon">🗄️</div>
                         <h3>Database Engine</h3>
                         <p>Build a simple database engine to understand storage engines, indexing, and query optimization.</p>
-                        <a href="/blog/database-engine" class="feature-link">
+                        <a href="/blog/database-engine/index.html" class="feature-link">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -133,20 +133,86 @@
             </div>
         </section>
 
-        <section class="section container">
-            <h2>Our Mission</h2>
-            <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto; text-align: center; animation: fadeIn 1s ease-out 0.5s both;">At BuiltFromScratch.tech, we embrace Richard Feynman's philosophy of understanding through creation. We embark on a journey to unravel the complexities of modern web technologies by recreating fundamental components from the ground up. Our aim is to provide deep insights into the inner workings of the software that powers the internet.</p>
-            <p style="font-size: 1.1rem; max-width: 800px; margin: 2rem auto 0; text-align: center; animation: fadeIn 1s ease-out 0.7s both;">Our goal is not just to build, but to truly understand. Through this process, we hope to demystify the technologies that form the backbone of our digital world, making this knowledge accessible to developers, enthusiasts, and curious minds alike.</p>
-        </section>
-
-        <section class="section container">
-            <h2>Join Our Exploration</h2>
-            <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto 3rem; animation: fadeIn 1s ease-out 0.5s both;">Whether you're a seasoned developer, a curious beginner, or somewhere in between, we invite you to join us on this journey of discovery. Follow our progress, contribute your insights, or simply learn along with us.</p>
-            <div style="text-align: center;">
-                <a href="#" class="cta-button">Read Our Latest Findings</a>
+        <section class="mission-section">
+            <div class="container">
+                <div class="mission-content">
+                    <h2>Our Mission</h2>
+                    <div class="mission-grid">
+                        <div class="mission-card">
+                            <div class="mission-icon">🎯</div>
+                            <h3>Learn Through Creation</h3>
+                            <p>We embrace Richard Feynman's philosophy of understanding through creation. By building fundamental components from scratch, we gain deep insights into how they work.</p>
+                        </div>
+                        <div class="mission-card">
+                            <div class="mission-icon">🔍</div>
+                            <h3>Deep Understanding</h3>
+                            <p>Our goal is not just to build, but to truly understand. We break down complex systems into understandable pieces, making technology more accessible.</p>
+                        </div>
+                        <div class="mission-card">
+                            <div class="mission-icon">🌟</div>
+                            <h3>Share Knowledge</h3>
+                            <p>We believe in making this knowledge accessible to developers, enthusiasts, and curious minds alike. Join us in demystifying the technologies that power the web.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p class="contact-subtitle">Have questions or suggestions? We'd love to hear from you.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>hello@builtfromscratch.tech</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">💬</div>
+                        <h3>Discord</h3>
+                        <p>Join our community</p>
+                        <a href="https://discord.gg/builtfromscratch" class="contact-link">Discord Server</a>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">🐙</div>
+                        <h3>GitHub</h3>
+                        <p>Check out our repositories</p>
+                        <a href="https://github.com/builtfromscratch" class="contact-link">GitHub Profile</a>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <form class="contact-form" action="/api/contact" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="cta-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">

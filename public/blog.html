@@ -32,12 +32,14 @@
 <body>
     <header>
         <nav class="container">
-            <a href="./" class="logo">BuiltFromScratch.tech</a>
+            <a href="/index.html" class="logo">
+                <img src="/images/logo.png" alt="BuiltFromScratch.tech Logo">
+            </a>
             <ul>
-                <li><a href="./">Home</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/blog.html">Blog</a></li>
+                <li><a href="/index.html#features">Features</a></li>
+                <li><a href="/index.html#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -45,68 +47,173 @@
     <main>
         <section class="blog-header">
             <div class="container">
-                <h1>Our Latest Articles</h1>
-                <p>Deep dives into web technology implementations and tutorials</p>
+                <h1>Learning Through Building</h1>
+                <p class="blog-subtitle">Deep dive tutorials on implementing core web technologies from scratch</p>
             </div>
         </section>
 
-        <section class="container">
-            <div class="blog-grid">
-                <!-- Blog Post 1 -->
-                <article class="blog-card">
-                    <img src="/images/http-server.jpg" alt="Building an HTTP Server">
-                    <div class="blog-card-content">
-                        <div class="blog-meta">March 15, 2024 • 10 min read</div>
-                        <h2>Building an HTTP Server from Scratch</h2>
-                        <p>Learn how we implemented a basic HTTP server in Go, handling requests and serving static files.</p>
-                        <a href="/blog/http-server" class="read-more">Read More →</a>
-                    </div>
-                </article>
+        <section class="blog-content">
+            <div class="container">
+                <div class="blog-grid">
+                    <!-- Featured Post -->
+                    <article class="blog-card featured">
+                        <div class="blog-card-image">
+                            <div class="featured-tag">Featured</div>
+                            <svg class="blog-illustration" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="400" height="300" fill="#F8FAFC"/>
+                                <path d="M150 100 H250 V200 H150 Z" fill="#635bff" opacity="0.1"/>
+                                <path d="M170 120 H230 V180 H170 Z" fill="#635bff" opacity="0.2"/>
+                                <path d="M180 140 H220 V160 H180 Z" fill="#635bff"/>
+                                <path d="M100 80 L300 80" stroke="#635bff" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M100 220 L300 220" stroke="#635bff" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="120" cy="80" r="8" fill="#00d4ff"/>
+                                <circle cx="280" cy="220" r="8" fill="#00d4ff"/>
+                            </svg>
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Servers</span>
+                                <span class="blog-date">March 15, 2024</span>
+                                <span class="blog-read-time">10 min read</span>
+                            </div>
+                            <h2>Building an HTTP Server from Scratch in Go</h2>
+                            <p>Learn how to implement a production-ready HTTP server from the ground up. Understand the core concepts of HTTP protocols, request handling, and static file serving.</p>
+                            <a href="/blog/http-server/index.html" class="blog-read-more">
+                                Read Article
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
 
-                <!-- Blog Post 2 -->
-                <article class="blog-card">
-                    <img src="/images/containers.jpg" alt="Container Implementation">
-                    <div class="blog-card-content">
-                        <div class="blog-meta">March 10, 2024 • 15 min read</div>
-                        <h2>Understanding Containers: A Deep Dive</h2>
-                        <p>Explore how containers work under the hood by building a simple containerization system.</p>
-                        <a href="/blog/containers" class="read-more">Read More →</a>
-                    </div>
-                </article>
+                    <!-- Regular Posts -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <svg class="blog-illustration" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="400" height="300" fill="#F8FAFC"/>
+                                <rect x="100" y="100" width="60" height="60" fill="#635bff" opacity="0.1"/>
+                                <rect x="170" y="100" width="60" height="60" fill="#635bff" opacity="0.2"/>
+                                <rect x="240" y="100" width="60" height="60" fill="#635bff"/>
+                                <rect x="100" y="170" width="60" height="60" fill="#00d4ff" opacity="0.2"/>
+                                <rect x="170" y="170" width="60" height="60" fill="#00d4ff"/>
+                                <rect x="240" y="170" width="60" height="60" fill="#00d4ff" opacity="0.1"/>
+                            </svg>
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Containers</span>
+                                <span class="blog-date">March 10, 2024</span>
+                                <span class="blog-read-time">15 min read</span>
+                            </div>
+                            <h2>Understanding Containers: A Deep Dive Implementation</h2>
+                            <p>Explore how containers work under the hood by building a simple containerization system. Learn about namespaces, cgroups, and isolation.</p>
+                            <a href="/blog/containers/index.html" class="blog-read-more">
+                                Read Article
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
 
-                <!-- Blog Post 3 -->
-                <article class="blog-card">
-                    <img src="/images/proxy.jpg" alt="Reverse Proxy">
-                    <div class="blog-card-content">
-                        <div class="blog-meta">March 5, 2024 • 12 min read</div>
-                        <h2>Implementing a Reverse Proxy</h2>
-                        <p>Step-by-step guide to building a basic reverse proxy with load balancing capabilities.</p>
-                        <a href="/blog/reverse-proxy" class="read-more">Read More →</a>
-                    </div>
-                </article>
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <svg class="blog-illustration" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="400" height="300" fill="#F8FAFC"/>
+                                <circle cx="200" cy="150" r="80" fill="#635bff" opacity="0.1"/>
+                                <path d="M160 150 L240 150" stroke="#635bff" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M200 110 L200 190" stroke="#635bff" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="160" cy="150" r="8" fill="#00d4ff"/>
+                                <circle cx="240" cy="150" r="8" fill="#00d4ff"/>
+                                <circle cx="200" cy="110" r="8" fill="#00d4ff"/>
+                                <circle cx="200" cy="190" r="8" fill="#00d4ff"/>
+                            </svg>
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Architecture</span>
+                                <span class="blog-date">March 5, 2024</span>
+                                <span class="blog-read-time">12 min read</span>
+                            </div>
+                            <h2>Building a Reverse Proxy with Load Balancing</h2>
+                            <p>Step-by-step guide to implementing a reverse proxy with load balancing capabilities. Learn about traffic distribution and SSL termination.</p>
+                            <a href="/blog/reverse-proxy/index.html" class="blog-read-more">
+                                Read Article
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About Us</h3>
-                    <p>BuiltFromScratch.tech is dedicated to exploring and understanding web technologies through hands-on recreation.</p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/index.html" class="footer-logo">
+                        <img src="/images/logo.png" alt="BuiltFromScratch.tech Logo">
+                        BuiltFromScratch.tech
+                    </a>
+                    <p class="footer-tagline">Understanding web technologies through hands-on recreation.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/yourusername" target="_blank" rel="noopener" aria-label="GitHub">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/yourusername" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
-                <div class="footer-section">
+                <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="./">Home</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/index.html#features">Features</a></li>
+                        <li><a href="/index.html#about">About</a></li>
                     </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/blog/http-server/index.html">HTTP Server Guide</a></li>
+                        <li><a href="/blog/containers/index.html">Containerization</a></li>
+                        <li><a href="/blog/reverse-proxy/index.html">Reverse Proxy</a></li>
+                        <li><a href="/blog/database-engine/index.html">Database Engine</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for the latest tutorials and updates.</p>
+                    <form class="newsletter-form" action="/subscribe" method="POST">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="cta-button">Subscribe</button>
+                    </form>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 BuiltFromScratch.tech. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="/privacy/index.html">Privacy Policy</a>
+                    <a href="/terms/index.html">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>

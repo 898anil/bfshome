@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building an HTTP Server from Scratch - Part 1: TCP Foundations - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to build a basic TCP server in Go as the foundation for our HTTP server implementation. Part 1 of our server from scratch series.">
+    <meta name="keywords" content="HTTP server, TCP, Go programming, web development, networking basics">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog/http-server/part-1">
+    <meta property="og:title" content="Building an HTTP Server from Scratch - Part 1: TCP Foundations">
+    <meta property="og:description" content="Start your journey in building a production-ready HTTP server by understanding TCP fundamentals">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog-post.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+</head>
+<body>
+    <!-- Include common header -->
+    <div include-html="/blog/common/header.html"></div>
+
+    <main class="blog-post">
+        <article class="container">
+            <!-- Article Header -->
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Servers</span>
+                    <span class="post-date">March 15, 2024</span>
+                    <span class="post-read-time">15 min read</span>
+                    <span class="post-series">Part 1 of 20</span>
+                </div>
+                <h1>Building an HTTP Server from Scratch - Part 1: TCP Foundations</h1>
+                <p class="post-excerpt">Start your journey in building a production-ready HTTP server by understanding TCP fundamentals and implementing a basic TCP server in Go.</p>
+            </header>
+
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h3>Table of Contents</h3>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#tcp-basics">TCP Basics</a></li>
+                    <li><a href="#implementation">Basic Implementation</a></li>
+                    <li><a href="#testing">Testing the Server</a></li>
+                    <li><a href="#advanced-topics">Advanced Topics</a></li>
+                    <li><a href="#next-steps">Next Steps</a></li>
+                </ul>
+            </div>
+
+            <div class="post-content">
+                <!-- Introduction Section -->
+                <section id="introduction" class="article-section">
+                    <h2>Introduction</h2>
+                    <div class="note">
+                        <strong>Series Overview:</strong> This is Part 1 of our HTTP Server implementation series. We'll start with TCP fundamentals and gradually build up to a full-featured HTTP server.
+                    </div>
+                    <p>Before diving into HTTP specifics, we need to understand and implement the foundational TCP layer that HTTP runs on. This first part focuses on creating a basic TCP server that can accept connections and handle data transfer.</p>
+                </section>
+
+                <!-- TCP Basics Section -->
+                <section id="tcp-basics" class="article-section">
+                    <h2>TCP Basics</h2>
+                    <figure class="article-image">
+                        <img src="/images/blog/tcp-handshake.svg" alt="TCP Three-Way Handshake Diagram">
+                        <figcaption>TCP Three-Way Handshake Process</figcaption>
+                    </figure>
+                    <p>TCP (Transmission Control Protocol) provides reliable, ordered, and error-checked delivery of data between applications running on hosts communicating via an IP network.</p>
+                    <div class="key-concepts">
+                        <h3>Key Concepts:</h3>
+                        <ul>
+                            <li>Connection-oriented communication</li>
+                            <li>Three-way handshake</li>
+                            <li>Reliable data transfer</li>
+                            <li>Flow control</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Implementation Section -->
+                <section id="implementation" class="article-section">
+                    <h2>Basic Implementation</h2>
+                    <p>Let's implement a basic TCP server in Go that can:</p>
+                    <ul>
+                        <li>Listen on a specified port</li>
+                        <li>Accept incoming connections</li>
+                        <li>Handle multiple clients concurrently</li>
+                        <li>Read and write data</li>
+                    </ul>
+
+                    <div class="code-block">
+                        <div class="code-block-header">
+                            <span>main.go</span>
+                            <button class="copy-button" data-clipboard-target="#code-1">Copy</button>
+                        </div>
+                        <pre><code class="language-go" id="code-1">
+package main
+
+import (
+    "fmt"
+    "log"
+    "net"
+)
+
+// Server represents our TCP server
+type Server struct {
+    host string
+    port int
+}
+
+// NewServer creates a new TCP server instance
+func NewServer(host string, port int) *Server {
+    return &Server{
+        host: host,
+        port: port,
+    }
+}
+
+// Start begins listening for connections
+func (s *Server) Start() error {
+    listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", s.host, s.port))
+    if err != nil {
+        return fmt.Errorf("failed to start server: %v", err)
+    }
+    defer listener.Close()
+
+    log.Printf("Server listening on %s:%d", s.host, s.port)
+
+    for {
+        conn, err := listener.Accept()
+        if err != nil {
+            log.Printf("Error accepting connection: %v", err)
+            continue
+        }
+
+        // Handle each connection in a goroutine
+        go s.handleConnection(conn)
+    }
+}
+                        </code></pre>
+                    </div>
+
+                    <div class="warning">
+                        <strong>Important:</strong> Always remember to close connections and handle errors appropriately in production code.
+                    </div>
+                </section>
+
+                <!-- Testing Section -->
+                <section id="testing" class="article-section">
+                    <!-- Testing content -->
+                </section>
+
+                <!-- Advanced Topics Section -->
+                <section id="advanced-topics" class="article-section">
+                    <!-- Advanced topics content -->
+                </section>
+
+                <!-- Next Steps Section -->
+                <section id="next-steps" class="article-section">
+                    <!-- Next steps content -->
+                </section>
+
+                <!-- Series Navigation -->
+                <div class="series-nav">
+                    <a href="/blog/http-server/index.html" class="prev">
+                        <svg><!-- Previous arrow icon --></svg>
+                        Series Introduction
+                    </a>
+                    <a href="/blog/http-server/part-2/index.html" class="next">
+                        Part 2: HTTP Protocol Basics
+                        <svg><!-- Next arrow icon --></svg>
+                    </a>
+                </div>
+
+                <!-- Related Articles -->
+                <div class="related-articles">
+                    <h3>Related Articles</h3>
+                    <div class="article-grid">
+                        <!-- Related article cards -->
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Include common footer -->
+    <div include-html="/blog/common/footer.html"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script>
+        // Initialize clipboard.js
+        new ClipboardJS('.copy-button');
+    </script>
+</body>
+</html> 

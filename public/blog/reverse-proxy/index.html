@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Reverse Proxy with Load Balancing - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to implement a reverse proxy with load balancing capabilities. Understanding traffic distribution and SSL termination.">
+    <meta name="keywords" content="reverse proxy, load balancing, SSL termination, web architecture">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog/reverse-proxy">
+    <meta property="og:title" content="Building a Reverse Proxy with Load Balancing">
+    <meta property="og:description" content="Learn how to implement a reverse proxy with load balancing capabilities">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog-post.css">
+</head>
+<body>
+    <header>
+        <!-- Same header as other pages -->
+    </header>
+
+    <main class="blog-post">
+        <article class="container">
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Architecture</span>
+                    <span class="post-date">March 5, 2024</span>
+                    <span class="post-read-time">12 min read</span>
+                </div>
+                <h1>Building a Reverse Proxy with Load Balancing</h1>
+                <p class="post-excerpt">Step-by-step guide to implementing a reverse proxy with load balancing capabilities. Learn about traffic distribution and SSL termination.</p>
+            </header>
+
+            <div class="post-content">
+                <h2>What is a Reverse Proxy?</h2>
+                <p>A reverse proxy sits between clients and your application servers, directing requests to the appropriate backend while providing additional features like load balancing and SSL termination.</p>
+
+                <h2>Basic Implementation</h2>
+                <pre><code class="language-go">
+package main
+
+import (
+    "net/http"
+    "net/http/httputil"
+    "net/url"
+)
+
+type Server struct {
+    addr  string
+    proxy *httputil.ReverseProxy
+}
+
+func NewServer(addr string) *Server {
+    url, _ := url.Parse(addr)
+    return &Server{
+        addr:  addr,
+        proxy: httputil.NewSingleHostReverseProxy(url),
+    }
+}
+
+func main() {
+    servers := []*Server{
+        NewServer("http://localhost:8081"),
+        NewServer("http://localhost:8082"),
+    }
+    // Implementation continues...
+}
+                </code></pre>
+
+                <!-- Continue with more content -->
+
+                <div class="post-navigation">
+                    <a href="/blog/database-engine" class="next-post">
+                        Next Article: Building a Database Engine
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 4.16667L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <!-- Same footer as other pages -->
+    </footer>
+</body>
+</html> 
