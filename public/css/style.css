@@ -1,3 +1,32 @@
+/* Add these styles at the top of your CSS file */
+.notification-banner {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1001;
+}
+
+.notification-banner p {
+    margin: 0;
+}
+
+.notification-banner strong {
+    font-weight: 600;
+}
+
+/* Update header styles to accommodate the banner */
+.home-header {
+    top: 40px; /* Height of the banner */
+}
+
+/* Update hero section padding */
+.hero {
+    padding-top: 200px; /* Increased to accommodate banner + header */
+}
+
 :root {
     /* Modern SaaS color palette */
     --bg-color: #ffffff;
@@ -1214,4 +1243,24 @@ footer {
     .contact-form-container {
         padding: 2rem;
     }
+}
+
+/* Add to your hero styles */
+.running-on {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.running-on a {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.running-on a:hover {
+    opacity: 0.9;
 }
