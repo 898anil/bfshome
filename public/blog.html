@@ -3,66 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuiltFromScratch.tech - Blog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Blog - BuiltFromScratch.tech</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore our latest articles about building web technologies from scratch, including HTTP servers, containerization, and more.">
+    <meta name="keywords" content="web development blog, technology tutorials, HTTP server implementation, containerization guides">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://builtfromscratch.tech/blog">
+    <meta property="og:title" content="Blog - BuiltFromScratch.tech">
+    <meta property="og:description" content="Explore our latest articles about building web technologies from scratch">
+    <meta property="og:image" content="https://builtfromscratch.tech/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://builtfromscratch.tech/blog">
+    <meta property="twitter:title" content="Blog - BuiltFromScratch.tech">
+    <meta property="twitter:description" content="Explore our latest articles about building web technologies from scratch">
+    <meta property="twitter:image" content="https://builtfromscratch.tech/twitter-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header>
         <nav class="container">
-            <a href="index.html" class="logo">
-                <img src="logo_v1.png" alt="BuiltFromScratch.tech Logo">
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+            <a href="./" class="logo">BuiltFromScratch.tech</a>
+            <ul>
+                <li><a href="./">Home</a></li>
                 <li><a href="blog.html">Blog</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
         </nav>
     </header>
 
-    <main class="container">
-        <h1 class="page-title">Blog</h1>
-        <section class="content-section">
-            <div class="coming-soon">
-                <i class="fas fa-tools"></i>
-                <h2>Coming Soon</h2>
-                <p>Our blog is under construction! We're working hard to bring you insightful articles about building technologies from scratch.</p>
+    <main>
+        <section class="blog-header">
+            <div class="container">
+                <h1>Our Latest Articles</h1>
+                <p>Deep dives into web technology implementations and tutorials</p>
             </div>
-            <div class="cta-section">
-                <h3>Stay Updated</h3>
-                <p>Subscribe to our newsletter to be notified when new articles are published:</p>
-                <form id="newsletter-form" class="contact-form">
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </section>
+
+        <section class="container">
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <article class="blog-card">
+                    <img src="/images/http-server.jpg" alt="Building an HTTP Server">
+                    <div class="blog-card-content">
+                        <div class="blog-meta">March 15, 2024 • 10 min read</div>
+                        <h2>Building an HTTP Server from Scratch</h2>
+                        <p>Learn how we implemented a basic HTTP server in Go, handling requests and serving static files.</p>
+                        <a href="/blog/http-server" class="read-more">Read More →</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-card">
+                    <img src="/images/containers.jpg" alt="Container Implementation">
+                    <div class="blog-card-content">
+                        <div class="blog-meta">March 10, 2024 • 15 min read</div>
+                        <h2>Understanding Containers: A Deep Dive</h2>
+                        <p>Explore how containers work under the hood by building a simple containerization system.</p>
+                        <a href="/blog/containers" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-card">
+                    <img src="/images/proxy.jpg" alt="Reverse Proxy">
+                    <div class="blog-card-content">
+                        <div class="blog-meta">March 5, 2024 • 12 min read</div>
+                        <h2>Implementing a Reverse Proxy</h2>
+                        <p>Step-by-step guide to building a basic reverse proxy with load balancing capabilities.</p>
+                        <a href="/blog/reverse-proxy" class="read-more">Read More →</a>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2023 BuiltFromScratch.tech. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>BuiltFromScratch.tech is dedicated to exploring and understanding web technologies through hands-on recreation.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="./">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BuiltFromScratch.tech. All rights reserved.</p>
+            </div>
         </div>
     </footer>
-
-    <script src="js/main.js"></script>
-
-    <!-- Add this just before the closing </body> tag -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q8MV7RGBH"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-4Q8MV7RGBH');
-    </script>
 </body>
 </html>
