@@ -1264,3 +1264,65 @@ footer {
 .running-on a:hover {
     opacity: 0.9;
 }
+
+/* Legal Pages Styles */
+.legal-content {
+    padding: 100px 0;
+}
+
+.legal-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--gray-800);
+}
+
+.last-updated {
+    color: var(--gray-600);
+    margin-bottom: 3rem;
+}
+
+.legal-section {
+    margin-bottom: 3rem;
+}
+
+.legal-section h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: var(--gray-800);
+}
+
+.legal-section h3 {
+    font-size: 1.25rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--gray-800);
+}
+
+.legal-section p {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    color: var(--gray-700);
+}
+
+.legal-section ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.legal-section li {
+    margin-bottom: 0.5rem;
+    color: var(--gray-700);
+}
+
+@media (max-width: 768px) {
+    .legal-content {
+        padding: 60px 0;
+    }
+
+    .legal-content h1 {
+        font-size: 2rem;
+    }
+
+    .legal-section h2 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>BuiltFromScratch.tech Blog</title>
+        <link>https://builtfromscratch.tech</link>
+        <description>Learn web technologies by building them from scratch</description>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 15 Mar 2024 12:00:00 GMT</lastBuildDate>
+        <atom:link href="https://builtfromscratch.tech/feed.xml" rel="self" type="application/rss+xml"/>
+        
+        <item>
+            <title>Building an HTTP Server from Scratch - Part 1: TCP Foundations</title>
+            <link>https://builtfromscratch.tech/blog/http-server/part-1/index.html</link>
+            <guid>https://builtfromscratch.tech/blog/http-server/part-1/index.html</guid>
+            <pubDate>Thu, 15 Mar 2024 12:00:00 GMT</pubDate>
+            <description>Learn how to build a basic TCP server in Go as the foundation for our HTTP server implementation.</description>
+            <category>Servers</category>
+        </item>
+        <!-- Add more items for other blog posts -->
+    </channel>
+</rss> 

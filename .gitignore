@@ -1,1 +1,62 @@
-out
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Binary files
+/bin/
+/pkg/
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+/data/
+/tmp/
+*.log
+.env
+.env.local
+
+# Dependencies
+/vendor/
+
+# Test coverage
+coverage.txt
+coverage.html
+
+# Build output
+/dist/
+/build/
+
+# Debug files
+debug
+__debug_bin
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated files
+*.generated.go
+*_string.go
+
+# Certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Local development files
+/local/
+notes.md
+TODO.md
